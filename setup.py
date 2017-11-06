@@ -33,9 +33,9 @@ setup(
     author_email=EMAIL,
     url=URL,
     packages=find_packages(exclude=('tests',)),
-    # entry_points={
-    #     'console_scripts': ['mycli=mymodule:cli'],
-    # },
+    entry_points={
+        'console_scripts': ['stocks_correlation=stocks_correlation:cli'],
+    },
     install_requires=INSTALL_REQUIRES,
     include_package_data=True,
     license='MIT',
