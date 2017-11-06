@@ -7,9 +7,10 @@ name = "pypi"
 
 [packages]
 
+click = ">=6.7"
 
 
 [dev-packages]
 
-pytest = ">=3.0.0"
-sphinx = ">=1.6.0"
+pytest = ">=3.2"
+sphinx = ">=1.6"
