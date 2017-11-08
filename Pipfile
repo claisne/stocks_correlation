@@ -14,4 +14,5 @@ pandas = ">=0.21"
 [dev-packages]
 
 pytest = ">=3.2"
-Sphinx = ">=1.6"
+sphinx = ">=1.6"
+pylint = ">=1.7"
