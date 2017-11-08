@@ -4,3 +4,4 @@ __pycache__/
 Pipfile.lock
 docs/build
 stocks_correlation.egg-info
+*.csv
