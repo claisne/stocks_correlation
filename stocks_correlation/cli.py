@@ -102,6 +102,7 @@ def cli(start_date, end_date, value, correl_method,
     for df_normalized in dfs_normalized[1:]:
         df_final = df_final.join(df_normalized, how='outer')
 
+    df_final = df_final.pct_change()
     print(df_final.corr(method=correl_method))
 
 
