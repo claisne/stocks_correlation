@@ -1,18 +1,30 @@
 # -*- coding: utf-8 -*-
+
+"""
+stocks_correlation.providers.quandl
+
+This module define how to get a pandas DataFrame
+from the Quandl service
+"""
+
 import urllib
 import pandas as pd
+
+from .pandas import DATAFRAME_COLUMNS
 
 API_BASE_PATH = 'https://www.quandl.com/api/v3/datasets/WIKI/'
 
 
 def url(ticker, start_date, end_date):
-    url = ''.join([API_BASE_PATH, ticker, '.csv'])
+    """Format the correct URL from the params"""
+    base_url = ''.join([API_BASE_PATH, ticker, '.csv'])
     params = {'start_date': start_date, 'end_date': end_date}
-    return ''.join([url, '?', urllib.parse.urlencode(params)])
+    return ''.join([base_url, '?', urllib.parse.urlencode(params)])
 
 
-def get(tickers, start_date, end_date):
-    df = pd.read_csv(url(tickers[0], start_date, end_date))
+def dataframe(ticker, start_date, end_date):
+    """Build and normalize a DataFrame"""
+    df = pd.read_csv(url(ticker, start_date, end_date))
     df = df[['Date', 'Adj. Open', 'Adj. High', 'Adj. Low', 'Adj. Close']]
-    df.columns = ['date', 'adj.open', 'adj.high', 'adj.low', 'adj.close']
+    df.columns = DATAFRAME_COLUMNS
     return df
