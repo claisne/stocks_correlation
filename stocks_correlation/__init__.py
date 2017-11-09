@@ -7,6 +7,7 @@ Init module
 
 from .cli import cli
 
+
 # pylint does not understand decorators
 # pylint: disable=no-value-for-parameter
 if __name__ == '__main__':

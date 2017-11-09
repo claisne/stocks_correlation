@@ -11,6 +11,7 @@ import urllib
 import pandas as pd
 
 from .pandas import DATAFRAME_COLUMNS
+from .exceptions import ProviderError
 
 API_BASE_PATH = 'https://www.quandl.com/api/v3/datasets/WIKI/'
 
@@ -24,7 +25,11 @@ def url(ticker, start_date, end_date):
 
 def dataframe(ticker, start_date, end_date):
     """Build and normalize a DataFrame"""
-    df = pd.read_csv(url(ticker, start_date, end_date))
-    df = df[['Date', 'Adj. Open', 'Adj. High', 'Adj. Low', 'Adj. Close']]
-    df.columns = DATAFRAME_COLUMNS
-    return df
+    csv_url = url(ticker, start_date, end_date)
+    try:
+        df = pd.read_csv(csv_url)
+        df = df[['Date', 'Adj. Open', 'Adj. High', 'Adj. Low', 'Adj. Close']]
+        df.columns = DATAFRAME_COLUMNS
+        return df
+    except urllib.error.HTTPError as err:
+        raise ProviderError('Quandl', ticker, csv_url, err)

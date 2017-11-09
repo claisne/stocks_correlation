@@ -11,6 +11,7 @@ import urllib
 import pandas as pd
 
 from .pandas import DATAFRAME_COLUMNS, filter_dates
+from .exceptions import ProviderError
 
 API_URL = 'https://www.alphavantage.co/query.csv'
 API_DEFAULT_PARAMS = {
@@ -28,7 +29,11 @@ def url(ticker):
 
 def dataframe(ticker, start_date, end_date):
     """Build and normalize a DataFrame"""
-    df = pd.read_csv(url(ticker))
-    df = df[['timestamp', 'open', 'high', 'low', 'adjusted_close']]
-    df.columns = DATAFRAME_COLUMNS
-    return filter_dates(df)
+    csv_url = url(ticker)
+    try:
+        df = pd.read_csv(csv_url)
+        df = df[['timestamp', 'open', 'high', 'low', 'adjusted_close']]
+        df.columns = DATAFRAME_COLUMNS
+        return filter_dates(df, start_date, end_date)
+    except Exception as err:
+        raise ProviderError('Alphavantage', ticker, csv_url, err)
