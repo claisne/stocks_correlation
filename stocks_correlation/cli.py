@@ -30,7 +30,15 @@ def default_end_date():
     return date.strftime(CLI_DATE_FORMAT)
 
 
-@click.command(help='Computes Stocks correlation.')
+help = """Computes Stocks correlation. Available data providers are {}.
+       The correlation can be computed on the open, low, high and close values
+       of the stocks. Some providers require an API key, that you can retrieve
+       online (check the documentation for more information on available
+       providers). The --save flag will dump all the data retrieved from the
+       providers in the current directory as CSVs.""".format(', '.join(pcli.CHOICES))
+
+
+@click.command(help=help)
 @click.option(
     '--start-date',
     show_default=True,

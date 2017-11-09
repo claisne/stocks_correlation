@@ -7,6 +7,7 @@ This module define how to get a pandas DataFrame
 from the Quandl service
 """
 
+import os
 import urllib
 import pandas as pd
 
@@ -15,11 +16,17 @@ from .exceptions import ProviderError
 
 API_BASE_PATH = 'https://www.quandl.com/api/v3/datasets/WIKI/'
 
+API_KEY_ENV = 'QUANDL_API_KEY'
+
 
 def url(ticker, start_date, end_date):
     """Format the correct URL from the params"""
     base_url = ''.join([API_BASE_PATH, ticker, '.csv'])
+
     params = {'start_date': start_date, 'end_date': end_date}
+    if API_KEY_ENV in os.environ:
+        params['api_key'] = os.environ[API_KEY_ENV]
+
     return ''.join([base_url, '?', urllib.parse.urlencode(params)])
 
 
