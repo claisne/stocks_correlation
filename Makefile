@@ -9,5 +9,7 @@ flake8:
 pylint:
 	pipenv run pylint stocks_correlation
 
+lint: flake8 pylint
+
 docs:
 	cd docs && pipenv run make html
