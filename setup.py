@@ -13,6 +13,9 @@ EMAIL = 'clement.laisne@gmail.com'
 AUTHOR = 'Clément Laisné'
 
 INSTALL_REQUIRES = [
+    'click>=6.7',
+    'pandas>=0.21',
+    'scipy>=1.0.0',
 ]
 
 here = os.path.abspath(os.path.dirname(__file__))
