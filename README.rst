@@ -1,6 +1,8 @@
 Stocks Correlation
 ========================
 
+A CLI Tool to compute stocks correlation
+
 License
 -------
 
