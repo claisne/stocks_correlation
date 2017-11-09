@@ -30,15 +30,16 @@ def default_end_date():
     return date.strftime(CLI_DATE_FORMAT)
 
 
-help = """Computes Stocks correlation. Available data providers are {}.
+HELP = """Computes Stocks correlation. Available data providers are {}.
        The correlation can be computed on the open, low, high and close values
        of the stocks. Some providers require an API key, that you can retrieve
        online (check the documentation for more information on available
        providers). The --save flag will dump all the data retrieved from the
-       providers in the current directory as CSVs.""".format(', '.join(pcli.CHOICES))
+       providers in the current
+       directory as CSVs.""".format(', '.join(pcli.CHOICES))
 
 
-@click.command(help=help)
+@click.command(help=HELP)
 @click.option(
     '--start-date',
     show_default=True,
@@ -54,7 +55,7 @@ help = """Computes Stocks correlation. Available data providers are {}.
 @click.option(
     '--value',
     show_default=True,
-    default=CORREL_COMPUTE_COLUMNS[0],
+    default=CORREL_COMPUTE_COLUMNS[-1],
     type=click.Choice(CORREL_COMPUTE_COLUMNS),
     help='Value on which correlation is computed'
 )
@@ -115,7 +116,7 @@ def cli(start_date, end_date, value, correl_method,
     for df_normalized in dfs_normalized[1:]:
         df_final = df_final.join(df_normalized, how='outer')
 
-    # Compute the correl on normalized returns
+    # Compute the correl on returns
     df_final = df_final.pct_change()
     df_correl = df_final.corr(method=correl_method)
     click.echo(df_correl)
